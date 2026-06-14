@@ -26,6 +26,7 @@ class CountryController extends ApiController
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255'],
             'flag' => ['nullable', 'string', 'max:500'],
+            'image' => ['nullable', 'string', 'max:500'],
             'description' => ['nullable', 'string'],
         ];
     }
@@ -37,6 +38,7 @@ class CountryController extends ApiController
             'name' => ['sometimes', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255'],
             'flag' => ['nullable', 'string', 'max:500'],
+            'image' => ['nullable', 'string', 'max:500'],
             'description' => ['nullable', 'string'],
         ];
     }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { fetchApi } from '../lib/api';
 
-const navItems = [
+const fallbackNavItems = [
   { name: 'Features', path: '/features' },
   { name: 'Spotlight', path: '/spotlight' },
   {
@@ -72,11 +73,30 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
+  const [navItems, setNavItems] = useState(fallbackNavItems);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    fetchApi('/public/navigation')
+      .then((items) => {
+        if (mounted && Array.isArray(items) && items.length) {
+          setNavItems([...items, { name: 'Publications', path: '/publications' }, { name: 'About Us', path: '/about' }]);
+        }
+      })
+      .catch(() => {
+        if (mounted) setNavItems(fallbackNavItems);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const renderDropdown = (dropdown) =>
     dropdown.map((sub, i) => (

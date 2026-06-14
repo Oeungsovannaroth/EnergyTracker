@@ -22,7 +22,7 @@ class ContentController extends ApiController
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'type' => ['required', 'in:product,blog,publication,featured'],
+            'type' => ['required', 'in:product,blog,featured'],
             'title' => ['required', 'string', 'max:255'],
             'desc' => ['nullable', 'string'],
             'category_id' => ['nullable', 'string', 'max:255'],
@@ -46,7 +46,7 @@ class ContentController extends ApiController
     public function update(Request $request, ContentItem $content): JsonResponse
     {
         $validated = $request->validate([
-            'type' => ['sometimes', 'in:product,blog,publication,featured'],
+            'type' => ['sometimes', 'in:product,blog,featured'],
             'title' => ['sometimes', 'string', 'max:255'],
             'desc' => ['nullable', 'string'],
             'category_id' => ['nullable', 'string', 'max:255'],

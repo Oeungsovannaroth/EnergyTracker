@@ -26,6 +26,7 @@ class PublicationController extends ApiController
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'publication_type' => ['nullable', 'string', 'max:80'],
+            'image' => ['nullable', 'string', 'max:500'],
             'file_url' => ['nullable', 'string', 'max:500'],
             'download_count' => ['nullable', 'integer', 'min:0'],
         ];
@@ -38,6 +39,7 @@ class PublicationController extends ApiController
             'title' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'publication_type' => ['nullable', 'string', 'max:80'],
+            'image' => ['nullable', 'string', 'max:500'],
             'file_url' => ['nullable', 'string', 'max:500'],
             'download_count' => ['nullable', 'integer', 'min:0'],
         ];

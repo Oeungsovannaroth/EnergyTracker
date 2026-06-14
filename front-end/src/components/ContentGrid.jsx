@@ -15,6 +15,7 @@ export default function ContentGrid({
     price: item.price,
     currency: item.currency,
   }),
+  
 }) {
   if (loading) {
     return <p className="text-center text-gray-500 py-12">Loading...</p>;

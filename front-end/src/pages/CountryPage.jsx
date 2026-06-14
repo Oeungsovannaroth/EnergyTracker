@@ -3,6 +3,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { fetchApi } from '../lib/api';
 import ContentGrid from '../components/ContentGrid';
+import { mediaUrl } from '../lib/mediaUrl';
 
 export default function CountryPage() {
   const { slug } = useParams();
@@ -57,11 +58,23 @@ export default function CountryPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Regions
       </Link>
 
-      <div className="mb-12">
-        <h1 className="text-5xl font-bold mb-4">
-          {country.flag} {country.name}
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl">{country.description}</p>
+      <div className="mb-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <h1 className="text-5xl font-bold mb-4">
+            {country.flag} {country.name}
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl">{country.description}</p>
+        </div>
+
+        {(country.image_url || country.image) && (
+          <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-900">
+            <img
+              src={mediaUrl(country.image_url || country.image)}
+              alt={country.name}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
       </div>
 
       <h2 className="text-2xl font-semibold mb-6">Spotlights</h2>

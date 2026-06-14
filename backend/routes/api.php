@@ -13,7 +13,6 @@ use App\Http\Controllers\Api\FeatureController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\PublicCmsController;
 use App\Http\Controllers\Api\PublicContentController;
@@ -29,6 +28,8 @@ Route::prefix('public')->group(function () {
     Route::get('/pages', [PublicCmsController::class, 'pages']);
     Route::get('/pages/path/{path}', [PublicCmsController::class, 'pageByPath'])->where('path', '.*');
     Route::get('/home', [PublicContentController::class, 'home']);
+    Route::get('/navigation', [PublicCmsController::class, 'navigation']);
+    Route::get('/uploads/{path}', [UploadController::class, 'show'])->where('path', '.*');
     Route::get('/content', [PublicContentController::class, 'index']);
     Route::get('/products', [PublicContentController::class, 'products']);
     Route::get('/products/{product}', [PublicContentController::class, 'product']);
@@ -42,6 +43,8 @@ Route::prefix('public')->group(function () {
     Route::get('/spotlights', [PublicCmsController::class, 'spotlights']);
     Route::get('/spotlights/{id}', [PublicCmsController::class, 'spotlight']);
     Route::get('/categories', [PublicCmsController::class, 'categories']);
+    Route::get('/categories/slug/{slug}', [PublicCmsController::class, 'categoryBySlug']);
+    Route::get('/categories/{id}/pages', [PublicCmsController::class, 'categoryPages']);
     Route::get('/articles', [PublicCmsController::class, 'articles']);
     Route::get('/articles/slug/{slug}', [PublicCmsController::class, 'articleBySlug']);
     Route::get('/articles/{id}', [PublicCmsController::class, 'article']);
@@ -93,7 +96,6 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('media', MediaController::class);
         Route::apiResource('publications', PublicationController::class);
         Route::apiResource('bookmarks', BookmarkController::class)->except(['store', 'destroy']);
-        Route::apiResource('pages', PageController::class);
         Route::post('/upload', [UploadController::class, 'store']);
         Route::get('/settings', [SettingController::class, 'index']);
         Route::post('/settings', [SettingController::class, 'upsert']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -23,5 +24,33 @@ class ApiController extends Controller
             'message' => $message,
             'errors' => $errors,
         ], $status);
+    }
+
+    protected function publicMediaUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        $path = trim($path);
+
+        if (Str::startsWith($path, ['data:', 'blob:'])) {
+            return $path;
+        }
+
+        if (Str::startsWith($path, ['http://', 'https://'])) {
+            return $path;
+        }
+
+        $normalized = Str::of($path)
+            ->replaceStart('storage/app/public/', '')
+            ->replaceStart('app/public/', '')
+            ->replaceStart('public/', '')
+            ->replaceStart('/storage/', '')
+            ->replaceStart('storage/', '')
+            ->replaceStart('/uploads/', 'uploads/')
+            ->toString();
+
+        return url('/api/public/uploads/'.ltrim($normalized, '/'));
     }
 }

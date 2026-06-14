@@ -15,6 +15,7 @@ class Country extends Model
         'name',
         'slug',
         'flag',
+        'image',
         'description',
     ];
 }

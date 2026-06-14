@@ -30,6 +30,7 @@ class PageController extends ApiController
             'content' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:500'],
             'category' => ['nullable', 'string', 'max:100'],
+            'category_id' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer'],
             'is_published' => ['nullable', 'boolean'],
         ];
@@ -46,6 +47,7 @@ class PageController extends ApiController
             'content' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:500'],
             'category' => ['nullable', 'string', 'max:100'],
+            'category_id' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer'],
             'is_published' => ['nullable', 'boolean'],
         ];

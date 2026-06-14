@@ -1,21 +1,4 @@
 export const cmsResources = {
-  pages: {
-    label: 'Pages',
-    endpoint: '/pages',
-    columns: ['title', 'path', 'parent_path'],
-    fields: [
-      { key: 'title', label: 'Title', type: 'text', required: true },
-      { key: 'path', label: 'Full Path (e.g. /features/solar-design)', type: 'text', required: true },
-      { key: 'parent_path', label: 'Parent Path (grid section, e.g. /features)', type: 'text' },
-      { key: 'slug', label: 'Slug', type: 'text' },
-      { key: 'description', label: 'Description', type: 'textarea' },
-      { key: 'content', label: 'Content', type: 'textarea' },
-      { key: 'image', label: 'Image', type: 'image' },
-      { key: 'category', label: 'Category', type: 'text' },
-      { key: 'sort_order', label: 'Sort Order', type: 'number' },
-      { key: 'is_published', label: 'Published', type: 'checkbox' },
-    ],
-  },
   regions: {
     label: 'Regions',
     endpoint: '/regions',
@@ -34,6 +17,7 @@ export const cmsResources = {
       { key: 'name', label: 'Name', type: 'text', required: true },
       { key: 'slug', label: 'Slug', type: 'text' },
       { key: 'flag', label: 'Flag (emoji or URL)', type: 'text' },
+      { key: 'image', label: 'Country Image', type: 'image' },
       { key: 'description', label: 'Description', type: 'textarea' },
     ],
   },
@@ -56,8 +40,12 @@ export const cmsResources = {
     fields: [
       { key: 'name', label: 'Name', type: 'text', required: true },
       { key: 'slug', label: 'Slug', type: 'text' },
-      { key: 'type', label: 'Type', type: 'select', options: ['article', 'blog', 'media', 'product'], required: true },
+      { key: 'type', label: 'Type', type: 'select', options: ['nav', 'article', 'blog', 'media', 'product'], required: true },
       { key: 'parent_id', label: 'Parent Category', type: 'select', optionsEndpoint: '/categories', optionLabel: 'name' },
+      { key: 'path', label: 'Navigation Path', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'sort_order', label: 'Sort Order', type: 'number' },
+      { key: 'is_published', label: 'Published', type: 'checkbox', default: true },
     ],
   },
   articles: {
@@ -135,6 +123,7 @@ export const cmsResources = {
       { key: 'title', label: 'Title', type: 'text', required: true },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'publication_type', label: 'Type', type: 'select', options: ['report', 'guideline', 'whitepaper'] },
+      { key: 'image', label: 'Publication Image', type: 'image' },
       { key: 'file_url', label: 'File URL (PDF link)', type: 'text' },
       { key: 'download_count', label: 'Downloads', type: 'number' },
       { key: 'author_id', label: 'Author', type: 'select', optionsEndpoint: '/users', optionLabel: 'name' },

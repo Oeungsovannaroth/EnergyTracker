@@ -15,6 +15,7 @@ class Publication extends Model
         'title',
         'description',
         'publication_type',
+        'image',
         'file_url',
         'download_count',
     ];

@@ -15,6 +15,7 @@ export default function Publications() {
         mapItem={(item) => ({
           title: item.title,
           desc: item.description,
+          image: item.image_url || item.image,
           category: item.publication_type,
         })}
       />

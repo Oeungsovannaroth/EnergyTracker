@@ -9,13 +9,13 @@
 - `_id`, `name`, `description`, `created_at`, `updated_at`
 
 ## countries
-- `_id`, `region_id`, `name`, `slug`, `flag`, `description`, `created_at`, `updated_at`
+- `_id`, `region_id`, `name`, `slug`, `flag`, `image`, `description`, `created_at`, `updated_at`
 
 ## spotlights
 - `_id`, `country_id`, `title`, `content`, `thumbnail`, `status`, `created_at`, `updated_at`
 
 ## categories
-- `_id`, `parent_id`, `name`, `slug`, `type`, `created_at`, `updated_at`
+- `_id`, `parent_id`, `name`, `slug`, `type`, `path`, `description`, `sort_order`, `is_published`, `created_at`, `updated_at`
 
 ## articles
 - `_id`, `category_id`, `country_id`, `author_id`, `title`, `slug`, `summary`, `content`, `thumbnail`, `views`, `status`, `created_at`, `updated_at`
@@ -35,7 +35,7 @@
 - `_id`, `author_id`, `type`, `title`, `description`, `thumbnail`, `media_url`, `duration`, `created_at`, `updated_at`
 
 ## publications
-- `_id`, `author_id`, `title`, `description`, `publication_type`, `file_url`, `download_count`, `created_at`, `updated_at`
+- `_id`, `author_id`, `title`, `description`, `publication_type`, `image`, `file_url`, `download_count`, `created_at`, `updated_at`
 
 ## bookmarks
 - `_id`, `user_id`, `article_id`, `created_at`

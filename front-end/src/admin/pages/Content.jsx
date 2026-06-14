@@ -6,7 +6,6 @@ import { normalizeList } from '../utils';
 
 const CONTENT_TYPES = [
   { value: 'blog', label: 'Blog' },
-  { value: 'publication', label: 'Publication' },
   { value: 'featured', label: 'Spotlight' },
 ];
 
@@ -112,7 +111,7 @@ export default function Content() {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Content</h1>
-          <p className="text-gray-500 mt-1">Manage blogs, publications, and spotlights</p>
+          <p className="text-gray-500 mt-1">Manage blogs and spotlights</p>
         </div>
         <div className="flex items-center gap-3">
           <select

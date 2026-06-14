@@ -41,6 +41,7 @@ export default function Regions() {
                   <Card
                     title={`${country.flag || ''} ${country.name}`}
                     desc={country.description}
+                    image={country.image_url || country.image}
                     category={region.name}
                   />
                 </Link>

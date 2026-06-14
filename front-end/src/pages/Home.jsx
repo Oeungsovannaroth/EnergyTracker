@@ -100,7 +100,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Featured Solar Shop</h2>
           <p className="text-center text-gray-600 dark:text-gray-300 mb-12">
-            {productsLoading ? 'Loading products...' : products.length ? 'Products are managed from Admin -> Shop Products.' : 'No products yet. Add them in Admin -> Shop Products.'}
+            {productsLoading ? 'Loading products...' : products.length ? 'Products are managed from Admin -> Shop Products.' : 'No products yet.'}
           </p>
 
           {productsLoading ? (

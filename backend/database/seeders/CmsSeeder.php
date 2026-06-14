@@ -180,6 +180,7 @@ class CmsSeeder extends Seeder
             'title' => 'Solar Energy Market Report 2025 - Cambodia',
             'description' => 'Comprehensive analysis and forecast until 2030.',
             'publication_type' => 'report',
+            'image' => 'https://www.apolloenergy.nz/assets/blog/how-much-power-does-a-5kw-solar-system-produce-hero.jpg',
             'file_url' => 'https://example.com/reports/cambodia-solar-2025.pdf',
             'download_count' => 42,
         ]);
@@ -189,6 +190,50 @@ class CmsSeeder extends Seeder
 
     private function seedPages(): void
     {
+        $navCategories = [];
+
+        foreach ([
+            ['name' => 'Features', 'slug' => 'features', 'path' => '/features', 'sort_order' => 1],
+            ['name' => 'Spotlight', 'slug' => 'spotlight', 'path' => '/spotlight', 'sort_order' => 2],
+            ['name' => 'Publications', 'slug' => 'publications', 'path' => '/publications', 'sort_order' => 8],
+        ] as $item) {
+            Category::create([
+                ...$item,
+                'type' => 'nav',
+                'is_published' => true,
+            ]);
+        }
+
+        foreach ([
+            'fossil-fuel' => ['name' => 'Fossil Fuel', 'path' => '/fossil-fuel', 'children' => ['Coal', 'Oil and Gas', 'Petroleum', 'Natural Gas']],
+            'regions' => ['name' => 'Regions', 'path' => '/regions', 'children' => ['Cambodia', 'India', 'Singapore', 'Japan', 'South Korea', 'Other Regions']],
+            'renewable-energy' => ['name' => 'Renewable Energy', 'path' => '/renewable-energy', 'children' => ['Solar', 'Wind', 'Clean Energy Financing', 'Fair & Just Transition']],
+            'media' => ['name' => 'Media', 'path' => '/media', 'children' => ['Videos', 'Podcasts']],
+            'blog' => ['name' => 'Blog', 'path' => '/blog', 'children' => ['Case Studies', 'Energy Transition Inspiration', 'Opinion Pieces']],
+        ] as $index => $group) {
+            $parent = Category::create([
+                'name' => $group['name'],
+                'slug' => $index,
+                'type' => 'nav',
+                'path' => $group['path'],
+                'sort_order' => count($navCategories) + 3,
+                'is_published' => true,
+            ]);
+
+            foreach ($group['children'] as $childIndex => $childName) {
+                $slug = str($childName)->slug()->toString();
+                $navCategories[$slug] = Category::create([
+                    'parent_id' => (string) $parent->getKey(),
+                    'name' => $childName,
+                    'slug' => $slug,
+                    'type' => 'nav',
+                    'path' => '/category/'.$slug,
+                    'sort_order' => $childIndex + 1,
+                    'is_published' => true,
+                ]);
+            }
+        }
+
         $sections = [
             ['/features', [
                 ['slug' => 'solar-design', 'title' => 'Advanced Solar System Design', 'description' => 'Tailored engineering solutions for residential, commercial, and utility-scale projects.', 'category' => 'Engineering'],
@@ -218,6 +263,7 @@ class CmsSeeder extends Seeder
                     'description' => $page['description'],
                     'content' => $page['description'].' Detailed content managed from admin dashboard.',
                     'category' => $page['category'] ?? null,
+                    'category_id' => isset($navCategories[$page['slug']]) ? (string) $navCategories[$page['slug']]->getKey() : null,
                     'sort_order' => $index + 1,
                     'is_published' => true,
                 ]);

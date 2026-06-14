@@ -1,135 +1,116 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
 
-import Footer from './components/Footer';
+import Footer from "./components/Footer";
 
-import AdminLayout from './admin/AdminLayout';
+import AdminLayout from "./admin/AdminLayout";
 
-import ProtectedRoute from './admin/ProtectedRoute';
+import ProtectedRoute from "./admin/ProtectedRoute";
 
-import AdminLogin from './admin/pages/Login';
+import AdminLogin from "./admin/pages/Login";
 
-import Dashboard from './admin/pages/Dashboard';
+import Dashboard from "./admin/pages/Dashboard";
 
-import Users from './admin/pages/Users';
+import Users from "./admin/pages/Users";
 
-import Products from './admin/pages/Products';
+import Products from "./admin/pages/Products";
 
-import Orders from './admin/pages/Orders';
+import Orders from "./admin/pages/Orders";
 
-import ResourceManager from './admin/pages/ResourceManager';
+import ResourceManager from "./admin/pages/ResourceManager";
 
+import Home from "./pages/Home";
 
+import Features from "./pages/Features";
 
-import Home from './pages/Home';
+import ArticlePage from "./pages/ArticlePage";
 
-import Features from './pages/Features';
+import Spotlight from "./pages/Spotlight";
 
-import ArticlePage from './pages/ArticlePage';
+import FossilFuel from "./pages/FossilFuel";
 
-import Spotlight from './pages/Spotlight';
+import RenewableEnergy from "./pages/RenewableEnergy";
 
-import FossilFuel from './pages/FossilFuel';
+import Regions from "./pages/Regions";
 
-import RenewableEnergy from './pages/RenewableEnergy';
+import CountryPage from "./pages/CountryPage";
+import CategoryPage from "./pages/CategoryPage";
 
-import Regions from './pages/Regions';
+import Media from "./pages/Media";
 
-import CountryPage from './pages/CountryPage';
+import MediaFiltered from "./pages/MediaFiltered";
 
-import Media from './pages/Media';
+import Blog from "./pages/Blog";
 
-import MediaFiltered from './pages/MediaFiltered';
+import BlogPost from "./pages/BlogPost";
 
-import Blog from './pages/Blog';
+import BlogFiltered from "./pages/BlogFiltered";
 
-import BlogPost from './pages/BlogPost';
+import Publications from "./pages/Publications";
 
-import BlogFiltered from './pages/BlogFiltered';
+import Contact from "./pages/Contact";
 
-import Publications from './pages/Publications';
+import About from "./pages/About";
 
-import Contact from './pages/Contact';
+import ProductDetail from "./pages/ProductDetail";
 
-import About from './pages/About';
+import Checkout from "./pages/Checkout";
 
-import ProductDetail from './pages/ProductDetail';
+import Receipt from "./pages/Receipt";
 
-import Checkout from './pages/Checkout';
+import Coal from "./pages/Coal";
 
-import Receipt from './pages/Receipt';
+import OilAndGas from "./pages/OilAndGas";
 
-import Coal from './pages/Coal';
+import Petroleum from "./pages/Petroleum";
 
-import OilAndGas from './pages/OilAndGas';
+import NaturalGas from "./pages/NaturalGas";
 
-import Petroleum from './pages/Petroleum';
+import Others from "./pages/Others";
 
-import NaturalGas from './pages/NaturalGas';
+import Solar from "./pages/Solar";
 
-import Others from './pages/Others';
+import Wind from "./pages/Wind";
 
-import Solar from './pages/Solar';
+import CleanEnergyFinancing from "./pages/CleanEnergyFinancing";
 
-import Wind from './pages/Wind';
-
-import CleanEnergyFinancing from './pages/CleanEnergyFinancing';
-
-import FairJustTransition from './pages/FairJustTransition';
-
-
+import FairJustTransition from "./pages/FairJustTransition";
+import DynamicPage from "./pages/DynamicPage";
 
 function PublicLayout() {
-
   return (
-
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-
       <Navbar />
 
       <main className="pt-16">
-
         <Outlet />
-
       </main>
 
       <Footer />
-
     </div>
-
   );
-
 }
 
-
-
 function App() {
-
   return (
-
     <Router>
-
       <Routes>
-
         <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route
-
           path="/admin"
-
           element={
-
             <ProtectedRoute>
-
               <AdminLayout />
-
             </ProtectedRoute>
-
           }
-
         >
-
           <Route index element={<Dashboard />} />
 
           <Route path="orders" element={<Orders />} />
@@ -139,13 +120,9 @@ function App() {
           <Route path="users" element={<Users />} />
 
           <Route path="manage/:resourceKey" element={<ResourceManager />} />
-
         </Route>
 
-
-
         <Route element={<PublicLayout />}>
-
           <Route path="/" element={<Home />} />
 
           <Route path="/features" element={<Features />} />
@@ -166,19 +143,43 @@ function App() {
 
           <Route path="/media" element={<Media />} />
 
-          <Route path="/media/videos" element={<MediaFiltered type="video" title="Videos" />} />
+          <Route
+            path="/media/videos"
+            element={<MediaFiltered type="video" title="Videos" />}
+          />
 
-          <Route path="/media/podcasts" element={<MediaFiltered type="podcast" title="Podcasts" />} />
+          <Route
+            path="/media/podcasts"
+            element={<MediaFiltered type="podcast" title="Podcasts" />}
+          />
 
           <Route path="/blog" element={<Blog />} />
 
           <Route path="/blog/post/:slug" element={<BlogPost />} />
 
-          <Route path="/blog/case-studies" element={<BlogFiltered categorySlug="case-studies" title="Case Studies" />} />
+          <Route
+            path="/blog/case-studies"
+            element={
+              <BlogFiltered categorySlug="case-studies" title="Case Studies" />
+            }
+          />
 
-          <Route path="/blog/transition" element={<BlogFiltered categorySlug="transition" title="Energy Transition Inspiration" />} />
+          <Route
+            path="/blog/transition"
+            element={
+              <BlogFiltered
+                categorySlug="transition"
+                title="Energy Transition Inspiration"
+              />
+            }
+          />
 
-          <Route path="/blog/opinion" element={<BlogFiltered categorySlug="opinion" title="Opinion Pieces" />} />
+          <Route
+            path="/blog/opinion"
+            element={
+              <BlogFiltered categorySlug="opinion" title="Opinion Pieces" />
+            }
+          />
 
           <Route path="/publications" element={<Publications />} />
 
@@ -192,8 +193,6 @@ function App() {
 
           <Route path="/shop/receipt/:invoiceNumber" element={<Receipt />} />
 
-
-
           <Route path="/fossil-fuel/coal" element={<Coal />} />
 
           <Route path="/fossil-fuel/oil-gas" element={<OilAndGas />} />
@@ -206,21 +205,23 @@ function App() {
 
           <Route path="/renewable-energy/wind" element={<Wind />} />
 
-          <Route path="/renewable-energy/financing" element={<CleanEnergyFinancing />} />
+          <Route
+            path="/renewable-energy/financing"
+            element={<CleanEnergyFinancing />}
+          />
 
-          <Route path="/renewable-energy/transition" element={<FairJustTransition />} />
+          <Route
+            path="/renewable-energy/transition"
+            element={<FairJustTransition />}
+          />
 
+          <Route path="/category/:slug" element={<CategoryPage />} />
+
+          <Route path="*" element={<DynamicPage />} />
         </Route>
-
       </Routes>
-
     </Router>
-
   );
-
 }
 
-
-
 export default App;
-

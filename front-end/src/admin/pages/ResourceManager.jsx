@@ -9,7 +9,8 @@ import { cmsResources } from '../config/resources';
 
 function buildEmptyForm(fields) {
   return fields.reduce((form, field) => {
-    if (field.type === 'checkbox') form[field.key] = false;
+    if (field.default !== undefined) form[field.key] = field.default;
+    else if (field.type === 'checkbox') form[field.key] = false;
     else if (field.type === 'number') form[field.key] = 0;
     else form[field.key] = '';
     return form;

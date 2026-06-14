@@ -38,7 +38,6 @@ const navSections = [
   {
     title: 'Content',
     items: [
-      { to: '/admin/manage/pages', label: 'Pages', icon: FileText },
       { to: '/admin/manage/categories', label: 'Categories', icon: Tag },
       { to: '/admin/manage/articles', label: 'Articles', icon: Newspaper },
       { to: '/admin/manage/features', label: 'Features', icon: Star },

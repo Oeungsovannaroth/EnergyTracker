@@ -9,7 +9,6 @@ use App\Services\InvoiceService;
 use App\Services\TelegramService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PublicContentController extends ApiController
 {
@@ -163,7 +162,7 @@ class PublicContentController extends ApiController
             'category_id' => $item->category_id,
             'category' => $item->category,
             'image' => $item->image,
-            'image_url' => $this->mediaUrl($item->image),
+            'image_url' => $this->publicMediaUrl($item->image),
             'link' => $item->link,
             'price' => $meta['price'] ?? null,
             'currency' => $meta['currency'] ?? 'USD',
@@ -189,26 +188,4 @@ class PublicContentController extends ApiController
         return is_array($meta) ? $meta : [];
     }
 
-    private function mediaUrl(?string $path): ?string
-    {
-        if (blank($path)) {
-            return null;
-        }
-
-        $path = trim($path);
-
-        if (Str::startsWith($path, ['http://', 'https://'])) {
-            return $path;
-        }
-
-        $path = Str::of($path)
-            ->replaceStart('storage/app/public/', 'storage/')
-            ->replaceStart('app/public/', 'storage/')
-            ->replaceStart('public/', '')
-            ->replaceStart('uploads/', 'storage/uploads/')
-            ->replaceStart('/storage/', 'storage/')
-            ->toString();
-
-        return url('/'.ltrim($path, '/'));
-    }
 }

@@ -119,22 +119,6 @@ class ContentSeeder extends Seeder
                 'sort_order' => 3,
                 'is_published' => true,
             ],
-            [
-                'type' => 'publication',
-                'title' => 'Solar Energy Market Report 2025 - Cambodia',
-                'desc' => 'Comprehensive analysis and forecast until 2030.',
-                'category' => 'Report',
-                'sort_order' => 1,
-                'is_published' => true,
-            ],
-            [
-                'type' => 'publication',
-                'title' => 'Engineering Guidelines for Solar Projects in Tropics',
-                'desc' => 'Best practices for design and installation.',
-                'category' => 'Guideline',
-                'sort_order' => 2,
-                'is_published' => true,
-            ],
         ];
     }
 }

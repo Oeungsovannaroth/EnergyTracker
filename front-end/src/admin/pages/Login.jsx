@@ -78,7 +78,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold py-3 rounded-lg transition"
+            className="w-full cursor-pointer bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold py-3 rounded-lg transition"
           >
             {submitting ? 'Signing in...' : 'Sign in'}
           </button>

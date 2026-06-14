@@ -19,6 +19,7 @@ class Page extends Model
         'content',
         'image',
         'category',
+        'category_id',
         'sort_order',
         'is_published',
     ];

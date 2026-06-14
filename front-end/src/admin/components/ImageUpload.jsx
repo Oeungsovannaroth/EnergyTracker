@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ImageOff, Upload } from 'lucide-react';
 import { uploadFile } from '../../lib/api';
 import { mediaUrl } from '../../lib/mediaUrl';
@@ -7,6 +7,11 @@ export default function ImageUpload({ value, onChange, label = 'Image' }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [previewError, setPreviewError] = useState(false);
+  const [localPreview, setLocalPreview] = useState('');
+
+  useEffect(() => () => {
+    if (localPreview) URL.revokeObjectURL(localPreview);
+  }, [localPreview]);
 
   const handleFile = async (event) => {
     const file = event.target.files?.[0];
@@ -18,6 +23,16 @@ export default function ImageUpload({ value, onChange, label = 'Image' }) {
       return;
     }
 
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image must be 5 MB or smaller.');
+      event.target.value = '';
+      return;
+    }
+
+    if (localPreview) URL.revokeObjectURL(localPreview);
+
+    const preview = URL.createObjectURL(file);
+    setLocalPreview(preview);
     setUploading(true);
     setError('');
     setPreviewError(false);
@@ -25,6 +40,8 @@ export default function ImageUpload({ value, onChange, label = 'Image' }) {
     try {
       const result = await uploadFile(file);
       onChange(result.path);
+      URL.revokeObjectURL(preview);
+      setLocalPreview('');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -52,7 +69,7 @@ export default function ImageUpload({ value, onChange, label = 'Image' }) {
           className="flex-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
-      {value && (
+      {(localPreview || value) && (
         <div className="mt-3">
           {previewError ? (
             <div className="flex h-24 w-24 items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 text-gray-400">
@@ -60,13 +77,15 @@ export default function ImageUpload({ value, onChange, label = 'Image' }) {
             </div>
           ) : (
             <img
-              src={mediaUrl(value)}
+              src={localPreview || mediaUrl(value)}
               alt="Preview"
               className="h-24 w-24 object-cover rounded-lg border"
               onError={() => setPreviewError(true)}
             />
           )}
-          <p className="mt-1 text-xs text-gray-500 break-all">{mediaUrl(value)}</p>
+          <p className="mt-1 text-xs text-gray-500 break-all">
+            {localPreview ? 'Local preview, uploading...' : mediaUrl(value)}
+          </p>
         </div>
       )}
       {error && <p className="text-red-600 text-sm mt-2">{error}</p>}

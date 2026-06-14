@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, ImageOff, Loader2, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, ImageOff, Loader2, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { fetchApi } from '../lib/api';
 import { mediaUrl } from '../lib/mediaUrl';
 
@@ -85,10 +85,13 @@ export default function ProductDetail() {
 
             <Link
               to={`/shop/${product.id}/checkout`}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 text-white font-semibold hover:bg-emerald-700 transition"
+              className="group inline-flex items-center justify-center gap-3 rounded-lg bg-gray-950 px-8 py-4 text-white font-semibold shadow-xl shadow-gray-950/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-emerald-900/20 active:translate-y-0 active:scale-95 dark:bg-emerald-600 dark:hover:bg-emerald-500"
             >
-              <ShoppingCart className="w-5 h-5" />
-              Proceed to Checkout
+              <span className="relative flex h-5 w-5 items-center justify-center">
+                <ShoppingBag className="absolute h-5 w-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0" />
+                <ShoppingCart className="absolute h-5 w-5 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" />
+              </span>
+              Buy Now
             </Link>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ImageOff, ShoppingCart } from 'lucide-react';
+import { ImageOff, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { mediaUrl } from '../lib/mediaUrl';
 import { useState } from 'react';
 
@@ -20,13 +20,13 @@ export default function Card({
   const displayImage = image_url || image;
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow hover:shadow-2xl transition-all duration-300 group border border-gray-100 dark:border-gray-800">
-      <div className="h-48 bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+    <div className="group overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800">
+      <div className="relative aspect-[4/3] bg-gray-100 dark:bg-gray-800 overflow-hidden">
         {displayImage && !imageFailed ? (
           <img
             src={mediaUrl(displayImage)}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:brightness-75"
             onError={() => setImageFailed(true)}
           />
         ) : (
@@ -35,8 +35,14 @@ export default function Card({
           </div>
         )}
         {category && (
-          <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">
+          <div className="absolute top-4 left-4 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white shadow-lg">
             {category}
+          </div>
+        )}
+
+        {isProduct && desc && (
+          <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-gray-950/90 via-gray-950/75 to-transparent p-5 pt-16 text-sm leading-6 text-white transition-transform duration-300 group-hover:translate-y-0">
+            <p className="line-clamp-3">{desc}</p>
           </div>
         )}
       </div>
@@ -58,9 +64,12 @@ export default function Card({
         {isProduct ? (
           <Link
             to={link}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gray-950 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-gray-950/10 transition-all duration-200 hover:bg-emerald-600 hover:shadow-emerald-900/20 active:scale-95 dark:bg-emerald-600 dark:hover:bg-emerald-500"
           >
-            <ShoppingCart className="w-4 h-4" />
+            <span className="relative flex h-5 w-5 items-center justify-center">
+              <ShoppingBag className="absolute h-5 w-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0" />
+              <ShoppingCart className="absolute h-5 w-5 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" />
+            </span>
             {purchaseLabel}
           </Link>
         ) : (

@@ -11,10 +11,16 @@ export function mediaUrl(path) {
   if (value.startsWith('http://') || value.startsWith('https://')) {
     try {
       const url = new URL(value);
+      const apiOrigin = new URL(apiBaseUrl).origin;
       const isLocalHost = ['localhost', '127.0.0.1'].includes(url.hostname);
 
-      if (isLocalHost && url.pathname.startsWith('/storage/')) {
-        return `${origin}${url.pathname}${url.search}`;
+      if (isLocalHost && url.pathname.startsWith('/api/public/uploads/')) {
+        return `${apiBaseUrl}${url.pathname.replace(/^\/api/, '')}${url.search}`;
+      }
+
+      if (url.origin === apiOrigin && url.pathname.startsWith('/storage/')) {
+        const uploadPath = url.pathname.replace(/^\/storage\//, '');
+        return `${apiBaseUrl}/public/uploads/${uploadPath}${url.search}`;
       }
 
       return value;
@@ -29,6 +35,10 @@ export function mediaUrl(path) {
     .replace(/^uploads\//, 'storage/uploads/')
     .replace(/^public\//, '')
     .replace(/^\/?storage\//, '/storage/');
+
+  if (normalizedPath.startsWith('/storage/')) {
+    return `${apiBaseUrl}/public/uploads/${normalizedPath.replace(/^\/storage\//, '')}`;
+  }
 
   return `${origin}${normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`}`;
 }
