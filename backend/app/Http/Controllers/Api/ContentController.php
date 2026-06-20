@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class ContentController extends ApiController
 {
+    private const CONTENT_TYPES = 'product,blog,featured,renewable-energy,fossil-fuel';
+
     public function index(Request $request): JsonResponse
     {
         $query = ContentItem::query()->orderBy('sort_order')->latest();
@@ -22,7 +24,7 @@ class ContentController extends ApiController
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'type' => ['required', 'in:product,blog,featured'],
+            'type' => ['required', 'in:'.self::CONTENT_TYPES],
             'title' => ['required', 'string', 'max:255'],
             'desc' => ['nullable', 'string'],
             'category_id' => ['nullable', 'string', 'max:255'],
@@ -46,7 +48,7 @@ class ContentController extends ApiController
     public function update(Request $request, ContentItem $content): JsonResponse
     {
         $validated = $request->validate([
-            'type' => ['sometimes', 'in:product,blog,featured'],
+            'type' => ['sometimes', 'in:'.self::CONTENT_TYPES],
             'title' => ['sometimes', 'string', 'max:255'],
             'desc' => ['nullable', 'string'],
             'category_id' => ['nullable', 'string', 'max:255'],

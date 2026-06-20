@@ -45,6 +45,7 @@ import CategoryPage from "./pages/CategoryPage";
 import Media from "./pages/Media";
 
 import MediaFiltered from "./pages/MediaFiltered";
+import MediaDetail from "./pages/MediaDetail";
 
 import Blog from "./pages/Blog";
 
@@ -152,6 +153,8 @@ function App() {
             path="/media/podcasts"
             element={<MediaFiltered type="podcast" title="Podcasts" />}
           />
+
+          <Route path="/media/:id" element={<MediaDetail />} />
 
           <Route path="/blog" element={<Blog />} />
 

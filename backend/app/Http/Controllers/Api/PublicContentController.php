@@ -75,6 +75,16 @@ class PublicContentController extends ApiController
         return $this->success($products);
     }
 
+    public function renewableEnergy(): JsonResponse
+    {
+        return $this->typedContent('renewable-energy');
+    }
+
+    public function fossilFuel(): JsonResponse
+    {
+        return $this->typedContent('fossil-fuel');
+    }
+
     public function product(ContentItem $product): JsonResponse
     {
         if ($product->type !== 'product' || ! $product->is_published) {
@@ -159,6 +169,7 @@ class PublicContentController extends ApiController
             'type' => $item->type,
             'title' => $item->title,
             'desc' => $item->desc,
+            'description' => $item->desc,
             'category_id' => $item->category_id,
             'category' => $item->category,
             'image' => $item->image,
@@ -170,6 +181,18 @@ class PublicContentController extends ApiController
             'specs' => $meta['specs'] ?? [],
             'meta' => $meta,
         ];
+    }
+
+    private function typedContent(string $type): JsonResponse
+    {
+        $items = ContentItem::query()
+            ->where('type', $type)
+            ->where('is_published', true)
+            ->orderBy('sort_order')
+            ->get()
+            ->map(fn (ContentItem $item) => $this->contentPayload($item));
+
+        return $this->success($items);
     }
 
     private function nextOrderNumber(): string

@@ -11,12 +11,12 @@ export default function MediaFiltered({ type, title }) {
       <ContentGrid
         items={items}
         loading={loading}
-        getLink={(item) => item.media_url || '#'}
         mapItem={(item) => ({
           title: item.title,
           desc: item.description,
-          image: item.thumbnail,
+          image: item.thumbnail_url || item.thumbnail,
           category: item.type,
+          link: item.id ? `/media/${item.id}` : '#',
         })}
       />
     </div>

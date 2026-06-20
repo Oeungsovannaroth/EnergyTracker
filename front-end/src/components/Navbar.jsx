@@ -25,6 +25,7 @@ const fallbackNavItems = [
         items: [
           { name: 'Cambodia', path: '/regions/cambodia' },
           { name: 'India', path: '/regions/india' },
+          // { name: 'China', path: '/regions/china' },
           { name: 'Singapore', path: '/regions/singapore' },
         ],
       },

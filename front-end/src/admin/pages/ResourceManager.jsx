@@ -17,6 +17,13 @@ function buildEmptyForm(fields) {
   }, {});
 }
 
+function buildResourcePath(config) {
+  if (!config?.query) return config?.endpoint;
+
+  const params = new URLSearchParams(config.query);
+  return `${config.endpoint}?${params.toString()}`;
+}
+
 function FieldInput({ field, value, onChange, optionsMap }) {
   const commonClass =
     'w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500';
@@ -102,7 +109,7 @@ export default function ResourceManager() {
     if (!config) return;
     setLoading(true);
     try {
-      const result = await authApi('GET', config.endpoint);
+      const result = await authApi('GET', buildResourcePath(config));
       setItems(normalizeList(result.data ?? result));
     } catch (err) {
       setError(err.message);
@@ -147,7 +154,7 @@ export default function ResourceManager() {
 
   const openCreate = () => {
     setEditing(null);
-    setForm(buildEmptyForm(fields));
+    setForm({ ...buildEmptyForm(fields), ...(config.defaults ?? {}) });
     setError('');
     setModalOpen(true);
   };
@@ -169,7 +176,7 @@ export default function ResourceManager() {
     setError('');
 
     try {
-      const body = { ...form };
+      const body = { ...(config.defaults ?? {}), ...form };
       fields.forEach((field) => {
         if (field.type === 'number' && body[field.key] !== '') {
           body[field.key] = Number(body[field.key]);
@@ -195,7 +202,8 @@ export default function ResourceManager() {
   };
 
   const handleDelete = async (item) => {
-    if (!window.confirm(`Delete this ${config.label.slice(0, -1).toLowerCase()}?`)) return;
+    const singularLabel = config.singularLabel ?? config.label.slice(0, -1);
+    if (!window.confirm(`Delete this ${singularLabel.toLowerCase()}?`)) return;
 
     try {
       await authApi('DELETE', `${config.endpoint}/${item.id}`);
@@ -235,7 +243,7 @@ export default function ResourceManager() {
           className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg font-medium transition"
         >
           <Plus className="w-4 h-4" />
-          Add {config.label.slice(0, -1)}
+          Add {config.singularLabel ?? config.label.slice(0, -1)}
         </button>
       </div>
 
@@ -305,7 +313,7 @@ export default function ResourceManager() {
 
       <Modal
         open={modalOpen}
-        title={editing ? `Edit ${config.label.slice(0, -1)}` : `Add ${config.label.slice(0, -1)}`}
+        title={editing ? `Edit ${config.singularLabel ?? config.label.slice(0, -1)}` : `Add ${config.singularLabel ?? config.label.slice(0, -1)}`}
         onClose={() => setModalOpen(false)}
       >
         <form onSubmit={handleSubmit} className="space-y-4">

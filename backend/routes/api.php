@@ -31,6 +31,8 @@ Route::prefix('public')->group(function () {
     Route::get('/navigation', [PublicCmsController::class, 'navigation']);
     Route::get('/uploads/{path}', [UploadController::class, 'show'])->where('path', '.*');
     Route::get('/content', [PublicContentController::class, 'index']);
+    Route::get('/renewable-energy', [PublicContentController::class, 'renewableEnergy']);
+    Route::get('/fossil-fuel', [PublicContentController::class, 'fossilFuel']);
     Route::get('/products', [PublicContentController::class, 'products']);
     Route::get('/products/{product}', [PublicContentController::class, 'product']);
     Route::post('/products/{product}/purchase', [PublicContentController::class, 'purchase']);

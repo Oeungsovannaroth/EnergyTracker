@@ -265,12 +265,17 @@ class PublicCmsController extends ApiController
             $query->where('type', $request->string('type'));
         }
 
-        return $this->success($query->paginate(15));
+        $media = $query->paginate(15);
+        $media->setCollection(
+            $media->getCollection()->map(fn (Media $item) => $this->mediaPayload($item))
+        );
+
+        return $this->success($media);
     }
 
     public function mediaItem(string $id): JsonResponse
     {
-        return $this->success(Media::query()->findOrFail($id));
+        return $this->success($this->mediaPayload(Media::query()->findOrFail($id)));
     }
 
     public function publications(Request $request): JsonResponse
@@ -333,6 +338,23 @@ class PublicCmsController extends ApiController
             'download_count' => $publication->download_count,
             'created_at' => $publication->created_at,
             'updated_at' => $publication->updated_at,
+        ];
+    }
+
+    private function mediaPayload(Media $item): array
+    {
+        return [
+            'id' => (string) $item->getKey(),
+            'author_id' => $item->author_id,
+            'type' => $item->type,
+            'title' => $item->title,
+            'description' => $item->description,
+            'thumbnail' => $item->thumbnail,
+            'thumbnail_url' => $this->publicMediaUrl($item->thumbnail),
+            'media_url' => $item->media_url,
+            'duration' => $item->duration,
+            'created_at' => $item->created_at,
+            'updated_at' => $item->updated_at,
         ];
     }
 
